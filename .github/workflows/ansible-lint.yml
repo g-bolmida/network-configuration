@@ -10,9 +10,9 @@ jobs:
       ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
     name: Ansible Lint
     runs-on: ubuntu-24.04
-    steps:
-      - name: Install Ansible collections
-        run: ansible-galaxy collection install -r requirements.yml    
+    steps:  
       - uses: actions/checkout@v6
+      - name: Install Ansible collections
+        run: ansible-galaxy collection install -r requirements.yml  
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
