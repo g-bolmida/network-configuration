@@ -1,4 +1,4 @@
-# My VyOS home router config
+# My VyOS home-lab networking config
 
 ![linting](https://github.com/g-bolmida/network-configuration/actions/workflows/ansible-lint.yml/badge.svg)
 
