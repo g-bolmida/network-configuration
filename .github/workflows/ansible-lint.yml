@@ -5,7 +5,9 @@ on:
   push:
     branches: ["main"]
 jobs:
-  build:
+  ansible-lint:
+    env:
+      ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
     name: Ansible Lint
     runs-on: ubuntu-24.04
     steps:
