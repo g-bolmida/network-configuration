@@ -1,5 +1,7 @@
 # My VyOS home router config
 
+![linting](https://github.com/g-bolmida/network-configuration/actions/workflows/ansible-lint.yml/badge.svg)
+
 This repo holds the ansible to configure my VyOS home router.
 
 ## Starting on a new computer
