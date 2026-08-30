@@ -6,3 +6,8 @@ repos:
     hooks:
       - id: ansible-lint
         language_version: python3.13
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        args: [--strict]

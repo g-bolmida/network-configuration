@@ -1,3 +1,4 @@
+---
 - name: Enable node_exporter
   vyos.vyos.vyos_config:
     lines:
