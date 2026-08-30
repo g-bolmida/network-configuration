@@ -1,18 +1,18 @@
 ---
 - name: Router Configuration
   hosts: georges-router
-  gather_facts: False
+  gather_facts: false
   connection: ansible.netcommon.network_cli
 
   tasks:
     - name: General
-      import_tasks: tasks/general.yml
+      ansible.builtin.import_tasks: tasks/general.yml
       tags: [general]
 
     - name: Interfaces
-      import_tasks: tasks/interfaces.yml
+      ansible.builtin.import_tasks: tasks/interfaces.yml
       tags: [interfaces]
 
     - name: Monitoring
-      import_tasks: tasks/monitoring.yml
+      ansible.builtin.import_tasks: tasks/monitoring.yml
       tags: [monitoring]
