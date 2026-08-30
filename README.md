@@ -1,6 +1,6 @@
 # My VyOS home-lab networking config
 
-![linting](https://github.com/g-bolmida/network-configuration/actions/workflows/ansible-lint.yml/badge.svg)
+![ansible-lint](https://github.com/g-bolmida/network-configuration/actions/workflows/ansible-lint.yml/badge.svg) ![yamllint](https://github.com/g-bolmida/network-configuration/actions/workflows/yamllint.yml/badge.svg)
 
 This repo holds the ansible to configure my VyOS home router.
 
