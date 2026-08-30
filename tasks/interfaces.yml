@@ -1,0 +1,61 @@
+- name: Configure eth1 interface
+  vyos.vyos.vyos_interfaces:
+    config:
+      - name: eth1
+        description: "WAN Interface"
+        enabled: true
+        mtu: 1500
+    state: merged
+
+- name: Configure eth1 address
+  vyos.vyos.vyos_l3_interfaces:
+    config:
+      - name: eth1
+        ipv4:
+          - address: dhcp
+    state: merged
+
+- name: Configure eth1 offloading
+  vyos.vyos.vyos_config:
+    lines:
+      - set nat source rule 100 outbound-interface name 'eth1'
+      - set nat source rule 100 source address '192.168.1.0/24'
+      - set nat source rule 100 translation address 'masquerade'
+      - set interfaces ethernet eth1 offload gro
+      - set interfaces ethernet eth1 offload gso
+      - set interfaces ethernet eth1 offload sg
+      - set interfaces ethernet eth1 offload tso
+
+- name: Configure loopback interface
+  vyos.vyos.vyos_interfaces:
+    config:
+      - name: lo
+        enabled: true
+    state: merged
+
+# Setup eth2
+
+- name: Configure eth2 interface
+  vyos.vyos.vyos_interfaces:
+    config:
+      - name: eth2
+        description: "LAN Interface"
+        enabled: true
+        mtu: 1500
+    state: merged
+
+- name: Configure eth2 address
+  vyos.vyos.vyos_l3_interfaces:
+    config:
+      - name: eth2
+        ipv4:
+          - address: 192.168.1.30/24 #CHANGE THIS
+    state: merged
+
+- name: Configure eth2 offloading
+  vyos.vyos.vyos_config:
+    lines:
+      - set interfaces ethernet eth2 offload gro
+      - set interfaces ethernet eth2 offload gso
+      - set interfaces ethernet eth2 offload sg
+      - set interfaces ethernet eth2 offload tso

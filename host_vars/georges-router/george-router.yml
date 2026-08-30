@@ -1,0 +1,3 @@
+---
+router_ip: 192.168.1.30
+login_banner_msg: "Remember, any commands ran ad-hoc need to be added into playbooks for persistence."

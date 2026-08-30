@@ -1,0 +1,9 @@
+---
+repos:
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v26.8.0
+    exclude_paths:
+      - .github/
+      - .pre-commit-config.yaml
+    hooks:
+      - id: ansible-lint

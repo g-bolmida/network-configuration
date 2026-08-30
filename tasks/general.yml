@@ -1,0 +1,27 @@
+- name: Apply hostname
+  vyos.vyos.vyos_hostname:
+    config:
+      hostname: george-vyos
+    state: merged
+
+- name: Configure the timezone
+  vyos.vyos.vyos_config:
+    lines:
+      - set system time-zone America/New_York
+
+- name: Configure the pre-login banner
+  vyos.vyos.vyos_banner:
+    banner: pre-login
+    text: "{{ login_banner_msg }}"
+    state: present
+
+- name: Configure the post-login banner
+  vyos.vyos.vyos_banner:
+    banner: post-login
+    text: "{{ login_banner_msg }}"
+    state: present
+
+- name: Set SSH service to port 2222
+  vyos.vyos.vyos_config:
+    lines:
+      - set service ssh port 2222

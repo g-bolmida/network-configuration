@@ -1,0 +1,13 @@
+- name: Enable node_exporter
+  vyos.vyos.vyos_config:
+    lines:
+      - set service monitoring prometheus node-exporter listen-address {{ router_ip }}
+      - set service monitoring prometheus node-exporter port 9100
+      - set service monitoring prometheus node-exporter vrf default
+
+- name: Enable frr_exporter
+  vyos.vyos.vyos_config:
+    lines:
+      - set service monitoring prometheus frr-exporter listen-address {{ router_ip }}
+      - set service monitoring prometheus frr-exporter port 9300
+      - set service monitoring prometheus frr-exporter vrf default
