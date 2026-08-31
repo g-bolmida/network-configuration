@@ -1,0 +1,101 @@
+---
+
+- name: Ensure persistent Teleport directory exists
+  ansible.builtin.file:
+    path: "{{ teleport_dir }}/{{ item }}"
+    state: directory
+    mode: "0750"
+  loop:
+    - bin
+    - data
+    - scripts
+  become: true
+
+- name: Check if teleport binary already installed at this version
+  ansible.builtin.stat:
+    path: "{{ teleport_dir }}/bin/teleport-v{{ teleport_version }}"
+  register: teleport_bin_check
+  become: true
+
+- name: Download and extract Teleport tarball
+  ansible.builtin.unarchive:
+    src: "{{ teleport_tarball_url }}"
+    dest: "/tmp"
+    remote_src: true
+  when: not teleport_bin_check.stat.exists
+
+    # - name: Install versioned binaries into persistent storage
+    #  ansible.builtin.copy:
+    #    src: "/tmp/teleport/{{ item }}"
+    #    dest: "{{ teleport_dir }}/bin/{{ item }}-v{{ teleport_version }}"
+    #    mode: "0755"
+    #    remote_src: true
+    #  loop:
+    #    - teleport
+    #    - tsh
+    #    - tctl
+    #  when: not teleport_bin_check.stat.exists
+#
+    # - name: Symlink current binaries to versioned ones
+    #  ansible.builtin.file:
+    #    src: "{{ teleport_dir }}/bin/{{ item }}-v{{ teleport_version }}"
+    #    dest: "{{ teleport_dir }}/bin/{{ item }}"
+    #    state: link
+    #    force: true
+    #  loop:
+    #    - teleport
+    #    - tsh
+    #    - tctl
+#
+    # - name: Render teleport.yaml
+    #  ansible.builtin.template:
+    #    src: templates/teleport-node.yaml.j2
+    #    dest: "{{ teleport_dir }}/teleport.yaml"
+    #    mode: "0640"
+#
+    # - name: Write join token file (used once; teleport ignores it after first successful join)
+    #  ansible.builtin.copy:
+    #    content: "{{ teleport_join_token }}"
+    #    dest: "{{ teleport_dir }}/join-token"
+    #    mode: "0600"
+#
+    # - name: Render systemd unit
+    #  ansible.builtin.template:
+    #    src: templates/teleport.service.j2
+    #    dest: "{{ teleport_dir }}/teleport.service"
+    #    mode: "0644"
+#
+    # - name: Render the on-boot re-linking script
+    #  ansible.builtin.template:
+    #    src: templates/on-boot.sh.j2
+    #    dest: "{{ teleport_dir }}/scripts/on-boot.sh"
+    #    mode: "0755"
+#
+    # - name: Wire the on-boot script into vyos-postconfig-bootup.script
+    #  ansible.builtin.blockinfile:
+    #    path: /config/scripts/vyos-postconfig-bootup.script
+    #    create: true
+    #    mode: "0755"
+    #    insertafter: EOF
+    #    marker: "# {mark} ANSIBLE MANAGED BLOCK — teleport"
+    #    block: |
+    #      if [ -x {{ teleport_dir }}/scripts/on-boot.sh ]; then
+    #        {{ teleport_dir }}/scripts/on-boot.sh
+    #      fi
+#
+    # - name: Ensure the postconfig-bootup script itself has a shebang
+    #  ansible.builtin.lineinfile:
+    #    path: /config/scripts/vyos-postconfig-bootup.script
+    #    line: "#!/bin/sh"
+    #    insertbefore: BOF
+    #    create: true
+#
+    # - name: Run the on-boot script now so this takes effect without a reboot
+    #  ansible.builtin.command: "{{ teleport_dir }}/scripts/on-boot.sh"
+    #  changed_when: true
+#
+    # - name: Confirm teleport service is active
+    #  ansible.builtin.command: systemctl is-active teleport
+    #  register: teleport_status
+    #  changed_when: false
+    #  failed_when: teleport_status.stdout != "active"

@@ -1,0 +1,13 @@
+---
+- name: Bootstrap a fresh install
+  hosts: vyos_direct_netcli
+  gather_facts: false
+  roles:
+    - basic_actions
+
+- name: Bootstrap steps (direct SSH)
+  hosts: vyos_direct_ssh
+  gather_facts: false
+  become: true
+  roles:
+    - vyos_bootstrap

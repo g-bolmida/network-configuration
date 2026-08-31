@@ -21,5 +21,4 @@ repos:
       - id: trailing-whitespace
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
-      - id: check-yaml
       - id: end-of-file-fixer

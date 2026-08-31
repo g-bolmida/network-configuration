@@ -1,0 +1,23 @@
+version: v3
+teleport:
+  nodename: vyos-router
+  data_dir: {{ teleport_dir }}/data
+  proxy_server: "{{ teleport_proxy_addr }}"
+  join_params:
+    token_name: {{ teleport_dir }}/join-token
+    method: token
+  log:
+    output: stderr
+    severity: INFO
+
+auth_service:
+  enabled: false
+
+proxy_service:
+  enabled: false
+
+ssh_service:
+  enabled: true
+  labels:
+    role: router
+    env: home

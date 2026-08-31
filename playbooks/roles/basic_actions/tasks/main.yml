@@ -1,0 +1,5 @@
+- name: Apply hostname
+  vyos.vyos.vyos_hostname:
+    config:
+      hostname: george-vyos
+    state: merged

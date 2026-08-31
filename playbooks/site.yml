@@ -1,0 +1,10 @@
+---
+- name: Configure VyOS router
+  hosts: vyos_teleport
+  gather_facts: false
+  roles:
+    - roles/basic_actions
+  post_tasks:
+    - name: Save configuration
+      vyos.vyos.vyos_config:
+        save: true

@@ -1,0 +1,5 @@
+teleport_dir: "/config/teleport"
+teleport_version: "18.8.3"
+teleport_proxy_addr: "teleport.example.com:443"        # CHANGE ME
+teleport_join_token: "{{ vault_teleport_join_token }}" # store in vault
+teleport_tarball_url: "https://cdn.teleport.dev/teleport-v{{ teleport_version }}-linux-amd64-bin.tar.gz"

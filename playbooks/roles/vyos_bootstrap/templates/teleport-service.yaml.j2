@@ -1,0 +1,13 @@
+[Unit]
+Description=Teleport SSH Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart={{ teleport_dir }}/bin/teleport start -c {{ teleport_dir }}/teleport.yaml
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
