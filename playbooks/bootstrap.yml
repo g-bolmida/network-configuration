@@ -4,6 +4,10 @@
   gather_facts: false
   roles:
     - basic_actions
+  post_tasks:
+    - name: Save configuration
+      vyos.vyos.vyos_config:
+        save: true
 
 - name: Bootstrap steps (direct SSH)
   hosts: vyos_direct_ssh

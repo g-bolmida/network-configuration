@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+ln -sf {{ teleport_dir }}/bin/teleport-v{{ teleport_version }} {{ teleport_dir }}/bin/teleport
+ln -sf {{ teleport_dir }}/bin/tsh-v{{ teleport_version }} {{ teleport_dir }}/bin/tsh
+ln -sf {{ teleport_dir }}/bin/tctl-v{{ teleport_version }} {{ teleport_dir }}/bin/tctl
+cp {{ teleport_dir }}/teleport.service /etc/systemd/system/teleport.service
+systemctl daemon-reload
+systemctl enable --now teleport

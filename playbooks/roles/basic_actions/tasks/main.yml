@@ -3,3 +3,26 @@
     config:
       hostname: george-vyos
     state: merged
+
+- name: Configure eth1 (WAN) interface
+  vyos.vyos.vyos_interfaces:
+    config:
+      - name: eth1
+        description: "WAN Interface"
+        enabled: true
+        mtu: 1500
+    state: merged
+
+- name: Configure eth1 (WAN) DHCP address
+  vyos.vyos.vyos_l3_interfaces:
+    config:
+      - name: eth1
+        ipv4:
+          - address: dhcp
+    state: merged
+
+- name: Configure DNS resolvers
+  vyos.vyos.vyos_config:
+    lines:
+      - set system name-server '1.1.1.1'
+      - set system name-server '9.9.9.9'
